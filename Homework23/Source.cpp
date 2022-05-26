@@ -12,7 +12,7 @@
 //файле номера кредитных карточек.Разберитесь в том, какие форматы
 //используются для записи номеров кредитных карточек, и реализуйте
 //их проверку в вашей программе.
-void load_from_file(const std::string path,const std::regex reg)
+void find_from_file(const std::string path,const std::regex reg)
 {
 	std::ifstream in;
 	in.open(path);
@@ -21,7 +21,7 @@ void load_from_file(const std::string path,const std::regex reg)
 	{
 		++linelo;
 		std::smatch matches;
-		if (regex_search(line, matches, reg))
+		if (std::regex_search(line, matches, reg))
 		{
 			std::cout << linelo << ":" << matches[0] << std::endl;
 			if (1 < matches.size() && matches[1].matched)
@@ -40,9 +40,9 @@ int main()
 	std::regex pat2{ R"(\d{4} \d{4} \d{4} \d{4} \d{2}/\d{2}(\s*\w*\s*\w*)?)" };
 	try
 	{
-		load_from_file(path1, pat1);
+		find_from_file(path1, pat1);
 		std::cout << "==================================" << std::endl;
-		load_from_file(path2, pat2);
+		find_from_file(path2, pat2);
 	}
 	catch (const std::exception& exc)
 	{
